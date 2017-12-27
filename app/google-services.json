@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "872529799382",
+    "firebase_url": "https://my-wallet-1c975.firebaseio.com",
+    "project_id": "my-wallet-1c975",
+    "storage_bucket": "my-wallet-1c975.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872529799382:android:1ac381665d0ce971",
+        "android_client_info": {
+          "package_name": "smktelkom_mlg.sch.id.mywallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872529799382-c5si2m7huhcuatjor2bs32ceonba0j7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "smktelkom_mlg.sch.id.mywallet",
+            "certificate_hash": "faf2c69d2404e6129925f248d2b070a15878ca4b"
+          }
+        },
+        {
+          "client_id": "872529799382-8o0eqtt8vu9fpr7uvpd1vlj9d9tiunkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3pwg2aeDm8ONttukI-mTv75NwgZ3FozY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872529799382-8o0eqtt8vu9fpr7uvpd1vlj9d9tiunkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
