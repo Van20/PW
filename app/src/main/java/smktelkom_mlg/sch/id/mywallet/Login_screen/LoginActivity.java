@@ -1,5 +1,7 @@
 package smktelkom_mlg.sch.id.mywallet.Login_screen;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -113,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                        finish();
                     }
                 });
 
@@ -173,6 +176,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.addAuthStateListener(vAuthListener);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 
     private void signIn()
     {

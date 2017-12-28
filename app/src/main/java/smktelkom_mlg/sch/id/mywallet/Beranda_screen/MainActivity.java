@@ -1,8 +1,10 @@
 package smktelkom_mlg.sch.id.mywallet.Beranda_screen;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -13,6 +15,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.ActionBar;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -158,6 +166,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+        moveTaskToBack(true);
     }
 
     @Override
@@ -214,7 +223,7 @@ public class MainActivity extends AppCompatActivity
     // [START signOut]
     private void logout() {
         mAuth.signOut();
-        mUser.delete();
+        mUser = null;
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
     }

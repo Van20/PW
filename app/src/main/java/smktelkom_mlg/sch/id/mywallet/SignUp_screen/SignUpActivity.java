@@ -1,5 +1,7 @@
 package smktelkom_mlg.sch.id.mywallet.SignUp_screen;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -122,6 +124,13 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+        finish();
     }
 
     @Override
