@@ -1,9 +1,24 @@
 package smktelkom_mlg.sch.id.mywallet.SignUp_screen;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -18,6 +33,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +43,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword, inputConfirmPasswd;
     private TextView signInText;
     private Button   btnSignUp;
     private ProgressBar progressBar;
-    private FirebaseAuth auth;
+    private ImageView Profile;
+    File file;
+    Uri uri;
+    Intent CamIntent, GalIntent, CropIntent ;
+    public  static final int RequestPermissionCode  = 1 ;
+    DisplayMetrics displayMetrics ;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +74,12 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        inputConfirmPasswd = (EditText)findViewById(R.id.passwordconfirm);
+        inputConfirmPasswd = (EditText) findViewById(R.id.passwordconfirm);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         signInText = (TextView) findViewById(R.id.txtlogin);
+        Profile = (ImageView) findViewById(R.id.profile_image);
+
+        EnableRuntimePermission();
 
         signInText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +88,16 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ClickImageFromCamera() ;
+                GetImageFromGallery();
+
+            }
+        });
+
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,16 +154,125 @@ public class SignUpActivity extends AppCompatActivity {
                                 } else {
                                     startActivity(new Intent(SignUpActivity.this, MainActivity.class)); //awalnya milik MainActivity.java
                                     finish();
-                                    finish();
-                                    finish();
                                 }
                             }
                         });
-
             }
+
         });
     }
 
+    public void ClickImageFromCamera() {
+
+        CamIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        file = new File(Environment.getExternalStorageDirectory(),
+                "file" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        uri = Uri.fromFile(file);
+
+        CamIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+
+        CamIntent.putExtra("return-data", true);
+
+        startActivityForResult(CamIntent, 0);
+
+    }
+
+    public void GetImageFromGallery(){
+
+        GalIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        startActivityForResult(Intent.createChooser(GalIntent, "Select Image From Gallery"), 2);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+
+            ImageCropFunction();
+
+        }
+        else if (requestCode == 2) {
+
+            if (data != null) {
+
+                uri = data.getData();
+
+                ImageCropFunction();
+
+            }
+        }
+        else if (requestCode == 1) {
+
+            if (data != null) {
+
+                Bundle bundle = data.getExtras();
+
+                Bitmap bitmap = bundle.getParcelable("data");
+
+                Profile.setImageBitmap(bitmap);
+
+            }
+        }
+    }
+
+    public void ImageCropFunction() {
+
+        // Image Crop Code
+        try {
+            CropIntent = new Intent("com.android.camera.action.CROP");
+
+            CropIntent.setDataAndType(uri, "image/*");
+
+            CropIntent.putExtra("crop", "true");
+            CropIntent.putExtra("outputX", 360);
+            CropIntent.putExtra("outputY", 360);
+            CropIntent.putExtra("aspectX", 1);
+            CropIntent.putExtra("aspectY", 1);
+            CropIntent.putExtra("scaleUpIfNeeded", true);
+            CropIntent.putExtra("return-data", true);
+
+            startActivityForResult(CropIntent, 1);
+
+        } catch (ActivityNotFoundException e) {
+
+        }
+    }
+    //Image Crop Code End Here
+
+    public void EnableRuntimePermission(){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(SignUpActivity.this,
+                Manifest.permission.CAMERA))
+        {
+
+            ActivityCompat.requestPermissions(SignUpActivity.this,new String[]{
+                    Manifest.permission.CAMERA}, RequestPermissionCode);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+
+        switch (RC) {
+
+            case RequestPermissionCode:
+
+                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(SignUpActivity.this,"Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    Toast.makeText(SignUpActivity.this,"Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
+
+                }
+                break;
+        }
+    }
 
     @Override
     public void onBackPressed() {
