@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity
                         .into(Photo, new Callback() {
                             @Override
                             public void onSuccess() {
-                                Bitmap imageBitmap = ((BitmapDrawable) Photo.getDrawable()).getBitmap();
+                                Bitmap imageBitmap = ((BitmapDrawable)
+                                        Photo.getDrawable()).getBitmap();
                                 RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
                                 imageDrawable.setCircular(true);
                                 imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);

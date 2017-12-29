@@ -20,19 +20,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CARI LOKASI LAIN"
+                android:text="Monitor The Reports"
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_heading"
-                android:textColor="@color/textHeading"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cari lokasi tujuan terdekat di sekitar anda"
+                android:text="keep track of every penny with in-depth reports"
                 android:textStyle="normal"
                 android:textSize="@dimen/txt_paragraph"
-                android:textColor="@color/textParagraph"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
         </LinearLayout>
@@ -46,6 +46,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logowallet"/>
+            android:src="@drawable/welcome_tiga"/>
     </LinearLayout>
 </RelativeLayout>

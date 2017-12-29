@@ -22,7 +22,6 @@
         <activity
             android:name=".Login_screen.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
         </activity>
 
         <activity
@@ -39,15 +38,14 @@
         <activity
             android:name=".Splash_screen.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".Welcome_screen.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

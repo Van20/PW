@@ -10,6 +10,7 @@
 
     <color name="global_color_primary_light">#f5f5f5</color>
     <color name="textParagraph">#414141</color>
+    <color name="black">#000000</color>
     <color name="textHeading">#5F5F5F</color>
     <color name="dot_inactive">#3315B4F1</color>
     <color name="colorPrimaryTrans">#C615B4F1</color>

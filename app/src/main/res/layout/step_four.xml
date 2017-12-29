@@ -21,19 +21,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LAYANAN DARURAT"
+                android:text="Plan Your Money "
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_heading"
-                android:textColor="@color/textHeading"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="panggilan darurat akan membantu anda"
+                android:text="plan wisely with budgets, cut back on extras and start saving for your dreams"
                 android:textStyle="normal"
                 android:textSize="@dimen/txt_paragraph"
-                android:textColor="@color/textParagraph"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
         </LinearLayout>
@@ -47,7 +47,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logowallet"/>
+            android:src="@drawable/welcome_empat"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -11,10 +11,10 @@
         android:id="@+id/formLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/logowallet" />
+        android:src="@drawable/txt_login" />
 
     <ScrollView
         android:layout_width="match_parent"

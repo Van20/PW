@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:background="#24000000">
+        android:background="@color/white">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,20 +20,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Wallet Apps"
+                android:text="Manage Your Money"
                 android:textStyle="bold"
                 android:textSize="@dimen/txt_heading"
-                android:textColor="@color/textHeading"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Manage Your MONEY from Now!"
+                android:text="manage your personal finance and achieve your financial goals "
 
                 android:textStyle="normal"
                 android:textSize="@dimen/txt_paragraph"
-                android:textColor="@color/textParagraph"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space5"/>
         </LinearLayout>
@@ -48,6 +48,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logowallet" />
+            android:src="@drawable/welcome_satu" />
     </LinearLayout>
 </RelativeLayout>
