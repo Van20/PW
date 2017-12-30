@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF8C00</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ec8b3e</color>
+    <color name="colorPrimaryDark">#03A9F4</color>
+    <color name="colorPrimarylight">#B2DFDB</color>
+    <color name="colorAccent">#4CAF50</color>
+
     <color name="white">#FFFFFF</color>
     <color name="backteks">#BDB76B</color>
     <color name="button">#3CB371</color>
+    <color name="biru">#26A69A</color>
     <color name="text">#708090</color>
 
     <color name="global_color_primary_light">#f5f5f5</color>
     <color name="textParagraph">#414141</color>
     <color name="black">#000000</color>
+    <color name="button_grey">#212121</color>
     <color name="textHeading">#5F5F5F</color>
+    <color name="medium_grey">#757575</color>
     <color name="dot_inactive">#3315B4F1</color>
     <color name="colorPrimaryTrans">#C615B4F1</color>
     <color name="back_step">#F0FFFF</color>

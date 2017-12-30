@@ -18,12 +18,13 @@ import android.view.animation.AnimationUtils;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 
 import smktelkom_mlg.sch.id.mywallet.Beranda_screen.MainActivity;
+import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
 public class SplashActivity extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 15000;
+    private static int SPLASH_TIME_OUT = 10000;
     private KenBurnsView mKenBurns;
 
     @Override
@@ -41,7 +42,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
 

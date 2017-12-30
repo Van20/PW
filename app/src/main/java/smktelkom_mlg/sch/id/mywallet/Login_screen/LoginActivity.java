@@ -35,6 +35,7 @@ import smktelkom_mlg.sch.id.mywallet.Beranda_screen.MainActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 import smktelkom_mlg.sch.id.mywallet.Forgot_screen.ResetPasswordActivity;
 import smktelkom_mlg.sch.id.mywallet.SignUp_screen.SignUpActivity;
+import smktelkom_mlg.sch.id.mywallet.Uang_screen.SettingUp;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(firebaseAuth.getCurrentUser()!=null)
                 {
-                    Intent n=new Intent(LoginActivity.this,MainActivity.class);
+                    Intent n=new Intent(LoginActivity.this,SettingUp.class);
                     startActivity(n);
                     finish();
                     return;

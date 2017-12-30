@@ -25,6 +25,8 @@ import android.view.WindowManager;
 import smktelkom_mlg.sch.id.mywallet.Beranda_screen.MainActivity;
 import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
+import smktelkom_mlg.sch.id.mywallet.Uang_screen.SettingUp;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -146,10 +148,6 @@ public class SignUpActivity extends AppCompatActivity {
                                                  Toast.makeText(getApplicationContext(), "Password & Confirm must be same characters!", Toast.LENGTH_SHORT).show();
                                                  return;
                                              }
-                                             if (uri == null) {
-                                                 Toast.makeText(SignUpActivity.this, "Error updating image",
-                                                         Toast.LENGTH_SHORT).show();
-                                             }
 
                                              progressBar.setVisibility(View.VISIBLE);
                                              //create user
@@ -167,29 +165,12 @@ public class SignUpActivity extends AppCompatActivity {
                                                                  Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                                                          Toast.LENGTH_SHORT).show();
                                                              } else {
-                                                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class)); //awalnya milik MainActivity.java
+                                                                 startActivity(new Intent(SignUpActivity.this, SettingUp.class)); //awalnya milik MainActivity.java
                                                                  finish();
                                                              }
                                                          }
                                                      });
 
-                mmUser.updateProfile(profileUpdate)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(Task<Void> task) {
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (task.isSuccessful()) { //success on updating user profile
-                                    Toast.makeText(SignUpActivity.this, "Update Profile Succedeed",
-                                            Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-                                } else { //failed on updating user profile
-                                    Toast.makeText(SignUpActivity.this, "Update Profile Failed",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
             }
 
         });

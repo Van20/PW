@@ -14,4 +14,5 @@
     <dimen name="space5">5dp</dimen>
     <dimen name="btn_height">40dp</dimen>
     <dimen name="dots_height">30dp</dimen>
+    <dimen name="avator_size">40dp</dimen>
 </resources>

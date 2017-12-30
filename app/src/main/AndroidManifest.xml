@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -16,37 +17,31 @@
         android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".SignUp_screen.SignUpActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Login_screen.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Forgot_screen.ResetPasswordActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Beranda_screen.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme">
-        </activity>
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Splash_screen.SplashActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-
-        <activity android:name=".Welcome_screen.WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Welcome_screen.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Uang_screen.DetailReportActivity" />
+        <activity android:name=".Uang_screen.SettingUp"></activity>
     </application>
 
 </manifest>

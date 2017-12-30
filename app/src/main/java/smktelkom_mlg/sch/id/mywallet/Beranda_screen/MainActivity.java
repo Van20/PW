@@ -1,9 +1,14 @@
 package smktelkom_mlg.sch.id.mywallet.Beranda_screen;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -16,10 +21,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,11 +37,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.utils.Utils;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -50,6 +59,12 @@ import com.google.firebase.auth.UserInfo;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.SaldoController;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentCategory;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentDailyReport;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentHome;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentMonthlyReport;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.SPManager;
 import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
@@ -67,6 +82,12 @@ public class MainActivity extends AppCompatActivity
     public static final String ANONYMOUS = "anonymous";
     public static final String EMAIL = "@email.com";
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    Fragment fragment = null;
+    SPManager prefManager;
+    FloatingActionButton fabBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +100,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        prefManager = new SPManager(this);
+        fabBtn = (FloatingActionButton) findViewById(R.id.fab);
+        fabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -93,6 +115,12 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        fragmentManager = getFragmentManager();
+        if (savedInstanceState == null) {
+            fragment = new FragmentHome();
+            callFragment(fragment);
+        }
 
         //Google login
         View hView = navigationView.getHeaderView(0);
@@ -159,7 +187,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    public void showFloatingActionButton() {
+        fabBtn.show();
+    }
+    public void hideFloatingActionButton() {
+        fabBtn.hide();
+    }
+
+        @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -167,7 +202,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-        moveTaskToBack(true);
+
     }
 
     @Override
@@ -183,14 +218,60 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            showSaldoDialog();
+            return true;
+        }
+        if (id == R.id.action_reset) {
+            prefManager.setFirstTimeLaunch(true);
+            getApplicationContext().deleteDatabase("uangku");
+            finish();
+            return true;
+        }
+        if (id == R.id.share_action) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBodyText = getResources().getString(R.string.sharebody);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.sharesubject) );
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.sharedialog)));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void showSaldoDialog() {
+        final SaldoController saldoKontrol = new SaldoController(this);
+        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_saldo, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(this);
+        alertDialogBuilderUserInput.setView(mView);
+
+        final EditText newsaldo = (EditText) mView.findViewById(R.id.userInputDialog);
+        newsaldo.setText(saldoKontrol.getSaldo());
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogBox, int id) {
+                        saldoKontrol.updateSaldo(Integer.parseInt(newsaldo.getText().toString()));
+                        callFragment(new FragmentHome());
+                    }
+                })
+
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -199,17 +280,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            fragment = new FragmentHome();
+            callFragment(fragment);
         } else if (id == R.id.nav_kategori) {
-
+            fragment = new FragmentCategory();
+            callFragment(fragment);
         } else if (id == R.id.nav_harian) {
-
+            fragment = new FragmentDailyReport();
+            callFragment(fragment);
         } else if (id == R.id.nav_bulanan) {
-
+            fragment = new FragmentMonthlyReport();
+            callFragment(fragment);
         } else if (id == R.id.nav_backup) {
-
+            backupRestoredialog();
         } else if (id == R.id.nav_info) {
-
+            showAboutDialog();
         } else if (id == R.id.nav_logout) {
 
             logout();
@@ -221,12 +306,64 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Show About Dialog
+     */
+    private void showAboutDialog() {
+        View mView = getLayoutInflater().inflate(R.layout.dialog_about, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.txt_login);
+        builder.setTitle(R.string.app_name);
+        builder.setView(mView);
+        builder.create();
+        builder.show();
+    }
+
+    /**
+     * Selec Dialog For Backup or Restore
+     */
+    private void backupRestoredialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Backup & Restore");
+        builder.setItems(R.array.dialog_backup, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils.doBackup(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        callFragment(new FragmentHome());
+                        Toast.makeText(MainActivity.this, smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils.doRestore(), Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * Start Selected Fragment
+     */
+
+    private void callFragment(Fragment fragment) {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.replace(R.id.frame_container, fragment);
+        fragmentTransaction.commit();
+    }
+
+
     // [START signOut]
     private void logout() {
         mAuth.signOut();
         mUser = null;
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+
+        prefManager.setFirstTimeLaunch(true);
+        getApplicationContext().deleteDatabase("uangku");
+        finish();
+        return;
     }
 }
 

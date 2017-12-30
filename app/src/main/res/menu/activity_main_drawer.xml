@@ -10,21 +10,21 @@
         <item
             android:id="@+id/nav_kategori"
             android:icon="@drawable/ic_playlist_add_black_24dp"
-            android:title="Kategori" />
+            android:title="Category" />
 
     </group>
 
-    <item android:title="Laporan">
+    <item android:title="Report">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_harian"
                     android:icon="@drawable/ic_assessment_black_24dp"
-                    android:title="Harian" />
+                    android:title="Daily" />
                 <item
                     android:id="@+id/nav_bulanan"
                     android:icon="@drawable/ic_assessment_black_24dp"
-                    android:title="Bulanan" />
+                    android:title="Monthly" />
             </group>
         </menu>
     </item>
@@ -38,7 +38,7 @@
             <item
                 android:id="@+id/nav_info"
                 android:icon="@drawable/ic_info_black_24dp"
-                android:title="Tentang" />
+                android:title="About" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_action_logout"

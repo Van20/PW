@@ -1,15 +1,18 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="Theme.Design.Light" />
+    <style name="AppTheme.PopupOverlay" parent="Theme.Design.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
     <style name="TextViewAppearance" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
@@ -39,6 +42,16 @@
         <item name="android:paddingLeft">@dimen/space20</item>
         <item name="android:paddingRight">@dimen/space20</item>
         <item name="android:background">@drawable/btn_blue_selector</item>
+    </style>
+
+    <style name="ButtonMain">
+        <item name="android:textSize">@dimen/txt_btn</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/space20</item>
+        <item name="android:paddingRight">@dimen/space20</item>
+        <item name="android:background">@drawable/btn_main_selector</item>
     </style>
 
     <style name="ButtonTransparent">
