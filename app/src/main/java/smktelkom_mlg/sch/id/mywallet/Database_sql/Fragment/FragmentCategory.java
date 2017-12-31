@@ -3,8 +3,11 @@ package smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +27,14 @@ import smktelkom_mlg.sch.id.mywallet.Beranda_screen.MainActivity;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.CategoryController;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.ExpenseController;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Model.Category;
+import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
 public class FragmentCategory extends Fragment {
 
     public FragmentCategory() {
-    }
 
+    }
 
     RelativeLayout view;
 
@@ -50,7 +54,7 @@ public class FragmentCategory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_category, container, false);
-        getActivity().setTitle("Kategori");
+        getActivity().setTitle("Category");
         ((MainActivity) getActivity()).hideFloatingActionButton();
 
         category = new CategoryController(getActivity());
@@ -73,6 +77,7 @@ public class FragmentCategory extends Fragment {
             }
         });
         return view;
+
     }
 
 
@@ -104,7 +109,6 @@ public class FragmentCategory extends Fragment {
         }
     }
 
-
     /**
      * Custom Adapater For ListView
      */
@@ -126,6 +130,7 @@ public class FragmentCategory extends Fragment {
                 txtKat.setText(current.getKategori());
                 return convertView;
             }
+
         };
 
     }
@@ -135,7 +140,7 @@ public class FragmentCategory extends Fragment {
      */
     public void menuItemDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Edit / Hapus Kategori");
+        builder.setTitle("Edit / Delete Category");
         builder.setItems(R.array.dialog_kategori, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -144,7 +149,7 @@ public class FragmentCategory extends Fragment {
                         break;
                     case 1:
                         if (category.getCount() < 4) {
-                            Toast.makeText(getActivity(), "Minimal Memiliki 3 Kategori", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Minimum has 3 Categories", Toast.LENGTH_SHORT).show();
                         } else {
                             category.deleteCategory(
                                     selectedCategory.getId(),
@@ -200,5 +205,7 @@ public class FragmentCategory extends Fragment {
                 });
         AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
+
     }
+
 }

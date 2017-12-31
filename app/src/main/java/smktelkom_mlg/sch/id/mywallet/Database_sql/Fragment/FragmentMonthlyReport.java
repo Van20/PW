@@ -79,7 +79,7 @@ public class FragmentMonthlyReport extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_monthly_report, container, false);
-        getActivity().setTitle("Laporan Bulanan");
+        getActivity().setTitle("Monthly Report");
         ((MainActivity) getActivity()).hideFloatingActionButton();
         expense = new ExpenseController(getActivity());
         report = new ReportController(getActivity());
@@ -168,7 +168,7 @@ public class FragmentMonthlyReport extends Fragment {
 
                 icon.setBackgroundColor(chartColor.get(position));
                 txtNama.setText(current.getNamakategori());
-                txtTot.setText(String.valueOf(current.getTotal()) + " Pengeluaran");
+                txtTot.setText(String.valueOf(current.getTotal()) + " Spending");
                 txtJum.setText(Utils.convertCur(String.valueOf(current.getJumlah())));
                 return convertView;
             }
@@ -196,7 +196,7 @@ public class FragmentMonthlyReport extends Fragment {
                     return;
                 PieEntry pe = (PieEntry) e;
                 Toast.makeText(getActivity(),
-                        String.valueOf(Math.round(pe.getValue())) + " Pengeluaran Di Kategori " +
+                        String.valueOf(Math.round(pe.getValue())) + " Spending in Category " +
                                 pe.getLabel(),
                         Toast.LENGTH_LONG).show();
             }
@@ -241,7 +241,7 @@ public class FragmentMonthlyReport extends Fragment {
             data.setValueTextSize(11f);
             data.setValueTextColor(Color.WHITE);
             mChart.setData(data);
-            String center = String.valueOf(total) + " Pengeluaran \nDengan Total :\n" + Utils.convertCur(String.valueOf(jumlah));
+            String center = String.valueOf(total) + " Spending \nTotal Expenditure :\n" + Utils.convertCur(String.valueOf(jumlah));
             mChart.setCenterText(center);
 
             mChart.highlightValues(null);
@@ -249,7 +249,7 @@ public class FragmentMonthlyReport extends Fragment {
             mChart.animateXY(1400, 1400);
 
         } else {
-            Toast.makeText(getActivity(), "Tidak Ada Data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Unavailable Data", Toast.LENGTH_SHORT).show();
             contentLayout.setVisibility(View.GONE);
         }
 
@@ -266,7 +266,7 @@ public class FragmentMonthlyReport extends Fragment {
             bulan = getResources().getStringArray(R.array.Bulan)[i];
             tospinner.add(bulan + " " + String.valueOf(nowYear));
         }
-        tospinner.add(0, "Pilih Bulan-Tahun");
+        tospinner.add(0, "Select Month-Year");
         return tospinner;
     }
 

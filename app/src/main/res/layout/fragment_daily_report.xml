@@ -87,7 +87,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Total Pengeluaran : "
+            android:text="Amount of Expenditure : "
             android:textColor="#fff" />
 
         <TextView

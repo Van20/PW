@@ -57,7 +57,7 @@ public class Utils {
 
             if (sd.canWrite()) {
                 String currentDBPath = "/data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
-                String backupDBPath = "uangku";
+                String backupDBPath = "My Wallet";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
                 if (backupDB.exists()){
@@ -73,13 +73,13 @@ public class Utils {
                         return "No Data In Package";
                     }
                 }else{
-                    return "Belum Ada Backupan Database";
+                    return "Unavailable Backup Data";
                 }
             }
         } catch (Exception e) {
-            return "Belum Ada Database";
+            return "Unavailable Database";
         }
-        return "Belum";
+        return "Unavailable";
     }
 
     /**
@@ -91,7 +91,7 @@ public class Utils {
             File data = Environment.getDataDirectory();
             if (sd.canWrite()) {
                 String currentDBPath = "/data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
-                String backupDBPath = "uangku";
+                String backupDBPath = "My Wallet";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
                 if (currentDB.exists()) {

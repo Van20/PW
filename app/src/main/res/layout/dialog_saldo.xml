@@ -9,7 +9,7 @@
         android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saldo Saat Ini"
+        android:text="Current Balance"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:paddingBottom="15dp"/>
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:digits="0123456789"
-            android:hint="Jumlah Saldo"
+            android:hint="Amount of Balance"
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 

@@ -45,6 +45,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:onClick="showInput"
-        android:text="Tambah Kategori" />
+        android:text="Add Category" />
 
 </RelativeLayout>

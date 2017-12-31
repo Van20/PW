@@ -1,6 +1,7 @@
 package smktelkom_mlg.sch.id.mywallet.SignUp_screen;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -59,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView Profile;
     File file;
-    Uri uri;
+    Uri filePath;
     Intent CamIntent, GalIntent, CropIntent ;
     public  static final int RequestPermissionCode  = 1 ;
     DisplayMetrics displayMetrics ;
@@ -107,12 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
                                              final String password = inputPassword.getText().toString();
                                              final String confirm = inputConfirmPasswd.getText().toString();
 
-                                             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                                     .setPhotoUri(Uri.parse(email))
-                                                     .setDisplayName(username)
-                                                     .build();
-
-
                                              if (TextUtils.isEmpty(username)) {
                                                  Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
                                                  return;
@@ -156,7 +151,6 @@ public class SignUpActivity extends AppCompatActivity {
                                                      .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                                                          @Override
                                                          public void onComplete(@NonNull Task<AuthResult> task) {
-                                                             Toast.makeText(SignUpActivity.this, "Register account was successfully processed!" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                                              progressBar.setVisibility(View.GONE);
                                                              // If sign in fails, display a message to the user. If sign in succeeds
                                                              // the auth state listener will be notified and logic to handle the
@@ -165,6 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                                  Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
                                                                          Toast.LENGTH_SHORT).show();
                                                              } else {
+                                                                 Toast.makeText(SignUpActivity.this, "Register account was successfully processed!" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                                                  startActivity(new Intent(SignUpActivity.this, SettingUp.class)); //awalnya milik MainActivity.java
                                                                  finish();
                                                              }
@@ -185,15 +180,16 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
     public void ClickImageFromCamera() {
 
         CamIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
         file = new File(Environment.getExternalStorageDirectory(),
                 "file" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-        uri = Uri.fromFile(file);
+        filePath  = Uri.fromFile(file);
 
-        CamIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+        CamIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, filePath );
 
         CamIntent.putExtra("return-data", true);
 
@@ -221,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             if (data != null) {
 
-                uri = data.getData();
+                filePath  = data.getData();
 
                 ImageCropFunction();
 
@@ -247,7 +243,7 @@ public class SignUpActivity extends AppCompatActivity {
         try {
             CropIntent = new Intent("com.android.camera.action.CROP");
 
-            CropIntent.setDataAndType(uri, "image/*");
+            CropIntent.setDataAndType(filePath , "image/*");
 
             CropIntent.putExtra("crop", "true");
             CropIntent.putExtra("outputX", 360);

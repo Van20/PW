@@ -85,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        setGoogleButtonText(vSignInButton);
+
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -169,6 +171,21 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             }
+
+    //Google Login text
+    protected void setGoogleButtonText(SignInButton vSignInButton) {
+        // Search all the views inside SignInButton for TextView
+        for (int i = 0; i < vSignInButton.getChildCount(); i++) {
+            View v = vSignInButton.getChildAt(i);
+
+            // if the view is instance of TextView then change the text SignInButton
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText("Sign in\nwith Google");
+                return;
+            }
+        }
+    }
 
     @Override
     protected  void onStart()

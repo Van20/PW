@@ -3,10 +3,14 @@ package smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,7 +39,10 @@ import smktelkom_mlg.sch.id.mywallet.Database_sql.Model.Expense;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Model.Saldo;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.DatePicker;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils;
+import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FragmentHome extends Fragment {
 
@@ -61,7 +69,7 @@ public class FragmentHome extends Fragment {
     TextView currentSaldo, todayTotal;
     Spinner spinCategory;
     ListView expenseList;
-    Button btnTgl,btnNext,btnPrev;
+    Button btnTgl, btnNext, btnPrev;
 
     private CategoryController category;
     private SaldoController saldo;
@@ -71,7 +79,7 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_home, container, false);
-        getActivity().setTitle("Manage your Money");
+        getActivity().setTitle("Manage Money");
 
         ((MainActivity) getActivity()).showFloatingActionButton();
 
@@ -128,16 +136,16 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
-    private void changeDay(String s){
+    private void changeDay(String s) {
         String date = btnTgl.getText().toString();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(df.parse(date));
-            if (s.equalsIgnoreCase("+")){
-                c.add(Calendar.DATE,1);
-            }else{
-                c.add(Calendar.DATE,-1);
+            if (s.equalsIgnoreCase("+")) {
+                c.add(Calendar.DATE, 1);
+            } else {
+                c.add(Calendar.DATE, -1);
             }
             date = df.format(c.getTime());
             btnTgl.setText(date);
@@ -146,7 +154,6 @@ public class FragmentHome extends Fragment {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Inflate Item To List
@@ -181,7 +188,6 @@ public class FragmentHome extends Fragment {
             }
         }
     }
-
     /**
      * Method To Change Available Money
      */
@@ -248,7 +254,7 @@ public class FragmentHome extends Fragment {
      */
     public void menuItemDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Edit / Hapus Pengeluaran");
+        builder.setTitle("Edit / Delete Expenditure");
         builder.setItems(R.array.dialog_expense, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -289,13 +295,31 @@ public class FragmentHome extends Fragment {
         alertDialogBuilderUserInput
                 .setCancelable(false)
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialogBox, int id) {
                         Expense peng = new Expense();
+
                         peng.setId(SELECTED_ID);
                         peng.setIdkat(SELECTED_KATID);
-                        peng.setDeskripsi(inputDesk.getText().toString());
-                        peng.setJumlah(Integer.parseInt(inputAmount.getText().toString()));
+
+                        String Description = inputDesk.getText().toString();
+                        if (TextUtils.isEmpty(Description)) {
+                            Toast.makeText(getActivity(), "Enter description of Expenditure!", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            peng.setDeskripsi(inputDesk.getText().toString());
+                        }
+
+                        String Amount = inputAmount.getText().toString();
+                        if (TextUtils.isEmpty(Amount)) {
+                            Toast.makeText(getActivity(), "Enter amount of Expenditure!", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            peng.setJumlah(Integer.parseInt(inputAmount.getText().toString()));
+                        }
+
                         peng.setTanggal(btnTgl.getText().toString());
+
                         if (todo.equals("Add")) {
                             expense.addExpense(peng);
                             saldo.updateSaldo(mySaldo.getSaldo() - peng.getJumlah());

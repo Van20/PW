@@ -66,7 +66,7 @@ public class SettingUp extends Activity {
         saldotxt = (EditText) this.findViewById(R.id.setMoney);
         try {
             saldo.updateSaldo(Integer.parseInt(saldotxt.getText().toString()));
-            Log.d("Saldo Baru", saldo.getSaldo());
+            Log.d("New Balance", saldo.getSaldo());
             AlertDialog alertDialog = new AlertDialog.Builder(SettingUp.this).create();
             alertDialog.setTitle("Succesfully...");
             alertDialog.setMessage(getResources().getString(R.string.settingupmessagesucces));

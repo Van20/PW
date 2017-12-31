@@ -59,7 +59,7 @@ public class FragmentDailyReport extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_daily_report, container, false);
-        getActivity().setTitle("Laporan Harian");
+        getActivity().setTitle("Daily Report");
         ((MainActivity) getActivity()).hideFloatingActionButton();
         category = new CategoryController(getActivity());
         expense = new ExpenseController(getActivity());
@@ -166,7 +166,7 @@ public class FragmentDailyReport extends Fragment {
     public void loadKategori() {
         List<Category> Categories = category.getAllCategory();
         Category All = new Category();
-        All.setKategori("Semua Kategori");
+        All.setKategori("All Category");
         Categories.add(0, All);
         spinCategory.setItems(Categories);
         spinCategory.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<Category>() {

@@ -57,14 +57,14 @@
                 android:gravity="center"
                 android:onClick="firsttimeSetting"
                 android:padding="16dp"
-                android:text="Set Uang Awal" />
+                android:text="Early Money Set" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="ATAU"
+                android:text="or"
                 android:textColor="#fff"
                 android:textStyle="bold" />
 

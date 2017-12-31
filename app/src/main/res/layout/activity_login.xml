@@ -132,16 +132,16 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googlebtn"
-        android:layout_width="130dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="460dp"
+        android:layout_marginTop="450dp"
         android:visibility="visible" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="510dp"
+        android:layout_marginTop="505dp"
         android:gravity="center_horizontal"
         android:text="Have a Google account?"
         android:textColor="@color/white"

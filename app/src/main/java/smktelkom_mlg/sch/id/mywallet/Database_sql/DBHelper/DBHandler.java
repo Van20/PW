@@ -49,9 +49,9 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_KATEGORI);
         db.execSQL(CREATE_TABLE_PENGELUARAN);
         db.execSQL(CREATE_TABLE_SALDO);
-        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Konsumsi') ");
-        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Transportasi') ");
-        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Sosial') ");
+        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Consumption') ");
+        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Transportation') ");
+        db.execSQL("INSERT into 'kategori' ('deskripsi') VALUES ('Social') ");
     }
 
     @Override

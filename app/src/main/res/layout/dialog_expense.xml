@@ -10,7 +10,7 @@
         android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pengeluaran Baru"
+        android:text="New Expenditure"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Kategori Pengeluaran : "/>
+            android:text="Category of Expenditure : "/>
 
         <Spinner
             android:id="@+id/spinner"
@@ -43,7 +43,7 @@
             android:id="@+id/inputDesk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Deskripsi Pengeluaran"
+            android:hint="Description of Expenditure"
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="0123456789"
-            android:hint="Jumlah Pengeluaran"
+            android:hint="Amount of Expenditure"
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 

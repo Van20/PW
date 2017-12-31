@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "smktelkom_mlg.sch.id.mywallet"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -60,6 +60,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.9.0'
     compile 'com.google.android.gms:play-services-auth:9.2.0'
 
+    compile 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
 
     testCompile 'junit:junit:4.12'

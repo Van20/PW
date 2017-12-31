@@ -33,7 +33,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@+id/list_avatar"
                 android:singleLine="true"
-                android:text="Judul"
+                android:text="Title"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/list_avatar"
-                android:text="Kategori"
+                android:text="Category"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="@color/medium_grey"
                 android:textSize="14sp" />

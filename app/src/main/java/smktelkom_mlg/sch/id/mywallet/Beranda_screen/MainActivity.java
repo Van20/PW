@@ -25,6 +25,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -194,15 +195,14 @@ public class MainActivity extends AppCompatActivity
         fabBtn.hide();
     }
 
-        @Override
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
-
     }
 
     @Override
@@ -212,6 +212,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Setting saldo
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -223,12 +226,33 @@ public class MainActivity extends AppCompatActivity
             showSaldoDialog();
             return true;
         }
+
+        /**
+         * Reset button
+         */
         if (id == R.id.action_reset) {
-            prefManager.setFirstTimeLaunch(true);
-            getApplicationContext().deleteDatabase("uangku");
-            finish();
-            return true;
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Are you sure want to Reset Money DATA?").setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            prefManager.setFirstTimeLaunch(true);
+                            getApplicationContext().deleteDatabase("uangku");
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            finish();
+                            return;
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
         }
+
+        /**
+         * Share button
+         */
         if (id == R.id.share_action) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
@@ -242,6 +266,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Dialog setting Saldo
+     */
     private void showSaldoDialog() {
         final SaldoController saldoKontrol = new SaldoController(this);
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
@@ -255,6 +282,13 @@ public class MainActivity extends AppCompatActivity
                 .setCancelable(false)
                 .setPositiveButton("Send", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
+                        String saldo = newsaldo.getText().toString();
+
+                        if (TextUtils.isEmpty(saldo)) {
+                            Toast.makeText(getApplicationContext(), "Enter amount of Balance!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         saldoKontrol.updateSaldo(Integer.parseInt(newsaldo.getText().toString()));
                         callFragment(new FragmentHome());
                     }
@@ -272,7 +306,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    /**
+     * Navigation drawer
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -355,15 +391,27 @@ public class MainActivity extends AppCompatActivity
 
     // [START signOut]
     private void logout() {
-        mAuth.signOut();
-        mUser = null;
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        finish();
 
-        prefManager.setFirstTimeLaunch(true);
-        getApplicationContext().deleteDatabase("uangku");
-        finish();
-        return;
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Are you sure want to exit?\nIf you exit, your money data will be lost. \n\nUnless, Backup your money data first!").setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mAuth.signOut();
+                        mUser = null;
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
+
+                        prefManager.setFirstTimeLaunch(true);
+                        getApplicationContext().deleteDatabase("uangku");
+                        finish();
+                        return;
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 }
 
