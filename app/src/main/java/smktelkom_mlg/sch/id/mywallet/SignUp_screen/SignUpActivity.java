@@ -43,11 +43,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -63,10 +67,8 @@ public class SignUpActivity extends AppCompatActivity {
     Uri filePath;
     Intent CamIntent, GalIntent, CropIntent ;
     public  static final int RequestPermissionCode  = 1 ;
-    DisplayMetrics displayMetrics ;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
-    FirebaseUser mmUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

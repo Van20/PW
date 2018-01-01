@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Uang_screen.DetailReportActivity" />
-        <activity android:name=".Uang_screen.SettingUp"></activity>
+        <activity android:name=".Uang_screen.SettingUp" />
     </application>
 
 </manifest>
