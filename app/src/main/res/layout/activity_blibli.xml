@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/Theme.AppCompat.NoActionBar"
-    tools:context="smktelkom_mlg.sch.id.mywallet.Promo_screen.Blanja_screen.BlanjaActivity">
+    tools:context="smktelkom_mlg.sch.id.mywallet.Promo_screen.Blibli_screen.BlibliActivity">
 
     <WebView
         android:id="@+id/blanja"

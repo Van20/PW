@@ -1,4 +1,4 @@
-package smktelkom_mlg.sch.id.mywallet.Promo_screen.Blanja_screen;
+package smktelkom_mlg.sch.id.mywallet.Promo_screen.Shopee_screen;
 
 import android.app.ProgressDialog;
 import android.os.Build;
@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 
 import smktelkom_mlg.sch.id.mywallet.R;
 
-public class BlanjaActivity extends AppCompatActivity {
+public class ShopeeActivity extends AppCompatActivity {
 
     WebView webview;
     ProgressDialog progressDialog ;
@@ -19,7 +19,7 @@ public class BlanjaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blanja);
+        setContentView(R.layout.activity_shopee);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait..");
@@ -27,6 +27,7 @@ public class BlanjaActivity extends AppCompatActivity {
         progressDialog.setIcon(R.drawable.logowallet);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setProgress(0);
+        progressDialog.setIcon(R.drawable.logowallet);
 
         webview = (WebView)findViewById(R.id.blanja);
         webview.setWebViewClient(new WebViewClient());
@@ -61,7 +62,7 @@ public class BlanjaActivity extends AppCompatActivity {
         });
 
         //define your website url here which you want to open in webview.
-        webview.loadUrl("https://www.blanja.com");
+        webview.loadUrl("https://www.shopee.co.id");
         progressDialog.show();
     }
 }

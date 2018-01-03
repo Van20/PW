@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Theme.AppCompat.NoActionBar"
-    tools:context="smktelkom_mlg.sch.id.mywallet.Promo_screen.Blanja_screen.BlanjaActivity">
+    tools:context="smktelkom_mlg.sch.id.mywallet.Promo_screen.Shopee_screen.ShopeeActivity">
 
     <WebView
         android:id="@+id/blanja"

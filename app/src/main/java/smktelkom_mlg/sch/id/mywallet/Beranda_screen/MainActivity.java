@@ -366,16 +366,12 @@ public class MainActivity extends AppCompatActivity
      */
     private void backupRestoredialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Backup & Restore");
+        builder.setTitle("Backup report money");
         builder.setItems(R.array.dialog_backup, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
                         Toast.makeText(MainActivity.this, smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils.doBackup(), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        callFragment(new FragmentHome());
-                        Toast.makeText(MainActivity.this, smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils.doRestore(), Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

@@ -43,10 +43,31 @@
         <activity android:name=".Uang_screen.DetailReportActivity" />
         <activity android:name=".Uang_screen.SettingUp" />
         <activity android:name=".Promo_screen.PromoActivity" />
+
         <activity
             android:name=".Promo_screen.Blanja_screen.BlanjaActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Blibli_screen.BlibliActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Bukalapak_screen.BukalapakActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Elevenia_screen.EleveniaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.JD_screen.JdActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Lazada_screen.LazadaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Shopee_screen.ShopeeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Promo_screen.Tokopedia_screen.TokopediaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

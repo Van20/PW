@@ -42,7 +42,6 @@
 
     <string-array name="dialog_backup">
         <item>Backup My Data</item>
-        <item>Restore My Data</item>
     </string-array>
 
     <string-array name="dialog_expense">

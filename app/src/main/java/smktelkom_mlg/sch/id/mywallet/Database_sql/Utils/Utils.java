@@ -45,7 +45,6 @@ public class Utils {
         return dateFormat.format(date);
     }
 
-
     /**
      * Restorer Backup Database
      */
@@ -73,11 +72,11 @@ public class Utils {
                         return "No Data In Package";
                     }
                 }else{
-                    return "Unavailable Backup Data";
+                    return "No Backup Database";
                 }
             }
         } catch (Exception e) {
-            return "Unavailable Database";
+            return "Databse Unavailable";
         }
         return "Unavailable";
     }
