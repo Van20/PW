@@ -67,6 +67,11 @@ public class SignUpActivity extends AppCompatActivity {
     Uri filePath;
     Intent CamIntent, GalIntent, CropIntent ;
     public  static final int RequestPermissionCode  = 1 ;
+    DisplayMetrics displayMetrics ;
+
+    //firebase objects
+    private StorageReference storageReference;
+    private DatabaseReference mDatabase,myDatabase;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
@@ -90,6 +95,9 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         signInText = (TextView) findViewById(R.id.txtlogin);
         Profile = (ImageView) findViewById(R.id.profile_image);
+        storageReference = FirebaseStorage.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
+        myDatabase = FirebaseDatabase.getInstance().getReference();
 
         EnableRuntimePermission();
 

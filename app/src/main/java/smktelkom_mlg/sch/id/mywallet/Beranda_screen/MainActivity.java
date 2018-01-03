@@ -65,8 +65,10 @@ import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentCategory;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentDailyReport;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentHome;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentMonthlyReport;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentPromo;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.SPManager;
 import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
+import smktelkom_mlg.sch.id.mywallet.Promo_screen.PromoActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
 public class MainActivity extends AppCompatActivity
@@ -321,7 +323,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_kategori) {
             fragment = new FragmentCategory();
             callFragment(fragment);
-        } else if (id == R.id.nav_harian) {
+        } else if (id == R.id.nav_promo) {
+            fragment = new FragmentPromo();
+            callFragment(fragment);
+        }
+        else if (id == R.id.nav_harian) {
             fragment = new FragmentDailyReport();
             callFragment(fragment);
         } else if (id == R.id.nav_bulanan) {

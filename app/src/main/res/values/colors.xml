@@ -5,6 +5,7 @@
     <color name="colorPrimarylight">#B2DFDB</color>
     <color name="colorAccent">#4CAF50</color>
     <color name="lightgray">#ededed</color>
+    <color name="back_cardview">#EEEEEE</color>
 
     <color name="white">#FFFFFF</color>
     <color name="backteks">#BDB76B</color>

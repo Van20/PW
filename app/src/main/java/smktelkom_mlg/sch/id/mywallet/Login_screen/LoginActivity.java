@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
             // if the view is instance of TextView then change the text SignInButton
             if (v instanceof TextView) {
                 TextView tv = (TextView) v;
-                tv.setText("Sign in\nwith Google");
+                tv.setText("Sign in");
                 return;
             }
         }

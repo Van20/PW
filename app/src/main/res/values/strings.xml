@@ -16,14 +16,13 @@
     <string name="action_settings">Settings</string>
     <string name="loading">Loading…</string>
 
-
     <string name="setingupwelcome">How much is your money today?</string>
 
     <string name="action_reset">Reset</string>
     <string name="todayexpense">Expenditure today : </string>
     <string name="availablemoney">Remaining Currency in Now</string>
 
-    <string name="aboutheader">My Wallet &#169; 2017</string>
+    <string name="aboutheader">My Wallet &#169; 2018</string>
     <string name="abouttext">This app is useful to help control and manage expenses. </string>
     <string name="aboutfooter">Regard : PW 2018</string>
 
