@@ -166,12 +166,9 @@
 
     </ScrollView>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="20dp"
-        android:visibility="gone" />
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/signupdp_progress_bar"
+        app:progress_text_size="10sp"
+        style="@style/NumberProgressBar_Default" />
 
 </RelativeLayout>

@@ -42,7 +42,6 @@
         </activity>
         <activity android:name=".Uang_screen.DetailReportActivity" />
         <activity android:name=".Uang_screen.SettingUp" />
-        <activity android:name=".Promo_screen.PromoActivity" />
 
         <activity
             android:name=".Promo_screen.Blanja_screen.BlanjaActivity"
