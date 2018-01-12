@@ -166,9 +166,8 @@
 
     </ScrollView>
 
-    <com.daimajia.numberprogressbar.NumberProgressBar
+    <ProgressBar
         android:id="@+id/signupdp_progress_bar"
-        app:progress_text_size="10sp"
         style="@style/NumberProgressBar_Default" />
 
 </RelativeLayout>

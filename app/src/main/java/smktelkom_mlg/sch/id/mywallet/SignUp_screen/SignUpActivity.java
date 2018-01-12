@@ -41,7 +41,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 
@@ -52,6 +55,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,7 +68,9 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView Profile;
     File file;
+    int PICK_IMAGE_REQUEST = 111;
     Uri filePath;
+    ProgressDialog pd;
     Intent CamIntent, GalIntent, CropIntent ;
     public  static final int RequestPermissionCode  = 1 ;
     DisplayMetrics displayMetrics ;
@@ -92,12 +98,10 @@ public class SignUpActivity extends AppCompatActivity {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputConfirmPasswd = (EditText) findViewById(R.id.passwordconfirm);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.signupdp_progress_bar);
         signInText = (TextView) findViewById(R.id.txtlogin);
         Profile = (ImageView) findViewById(R.id.profile_image);
         storageReference = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS);
-        myDatabase = FirebaseDatabase.getInstance().getReference();
 
         EnableRuntimePermission();
 
@@ -109,72 +113,103 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        //creating reference to firebase storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReferenceFromUrl("gs://my-wallet-1c975.appspot.com");
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-                                             String username = inputUsername.getText().toString();
-                                             String email = inputEmail.getText().toString();
-                                             final String password = inputPassword.getText().toString();
-                                             final String confirm = inputConfirmPasswd.getText().toString();
+                String username = inputUsername.getText().toString();
+                String email = inputEmail.getText().toString();
+                final String password = inputPassword.getText().toString();
+                final String confirm = inputConfirmPasswd.getText().toString();
 
-                                             if (TextUtils.isEmpty(username)) {
-                                                 Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                if (TextUtils.isEmpty(username)) {
+                    Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             if (TextUtils.isEmpty(email)) {
-                                                 Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             if (TextUtils.isEmpty(password)) {
-                                                 Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             if (TextUtils.isEmpty(confirm)) {
-                                                 Toast.makeText(getApplicationContext(), "Enter confirm password!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                if (TextUtils.isEmpty(confirm)) {
+                    Toast.makeText(getApplicationContext(), "Enter confirm password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             if (password.length() < 6) {
-                                                 Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             // TODO Auto-generated method stub
-                                             if (password.equals(confirm)) {
-                                                 //password and confirm passwords equal.go to next step
-                                                 mAuth.getCurrentUser();
-                                             }
-                                             else {
-                                                 //passwords not matching.please try again
-                                                 Toast.makeText(getApplicationContext(), "Password & Confirm must be same characters!", Toast.LENGTH_SHORT).show();
-                                                 return;
-                                             }
+                // TODO Auto-generated method stub
+                if (password.equals(confirm)) {
+                    //password and confirm passwords equal.go to next step
+                    mAuth.getCurrentUser();
+                }
+                else {
+                    //passwords not matching.please try again
+                    Toast.makeText(getApplicationContext(), "Password & Confirm must be same characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                                             progressBar.setVisibility(View.VISIBLE);
-                                             //create user
-                                             //create user
-                                             mAuth.createUserWithEmailAndPassword(email, password)
-                                                     .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                                                         @Override
-                                                         public void onComplete(@NonNull Task<AuthResult> task) {
-                                                             progressBar.setVisibility(View.GONE);
-                                                             // If sign in fails, display a message to the user. If sign in succeeds
-                                                             // the auth state listener will be notified and logic to handle the
-                                                             // signed in user can be handled in the listener.
-                                                             if (!task.isSuccessful()) {
-                                                                 Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
-                                                                         Toast.LENGTH_SHORT).show();
-                                                             } else {
-                                                                 Toast.makeText(SignUpActivity.this, "Register account was successfully processed!" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                                                 startActivity(new Intent(SignUpActivity.this, SettingUp.class)); //awalnya milik MainActivity.java
-                                                                 finish();
-                                                             }
-                                                         }
-                                                     });
+                progressBar.setVisibility(View.VISIBLE);
+                //create user
+                //create user
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if(filePath != null) {
+                                    progressBar.setVisibility(View.GONE);
+
+                                    StorageReference childRef = storageRef.child("image.jpg");
+
+                                    //uploading the image
+                                    UploadTask uploadTask = childRef.putFile(filePath);
+
+                                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            pd.dismiss();
+                                            Toast.makeText(SignUpActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            pd.dismiss();
+                                            Toast.makeText(SignUpActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                                else {
+                                    Toast.makeText(SignUpActivity.this, "Select an image", Toast.LENGTH_SHORT).show();
+                                }
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Register account was successfully processed!" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this, SettingUp.class)); //awalnya milik MainActivity.java
+                                    finish();
+                                }
+
+                            }
+
+                        });
 
             }
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ public class SettingUp extends Activity {
             launchHomeScreen();
             finish();
         }
+
         saldotxt = (EditText) this.findViewById(R.id.setMoney);
         setContentView(R.layout.activity_setting_up);
 
@@ -73,7 +75,15 @@ public class SettingUp extends Activity {
             alertDialog.setIcon(R.drawable.ic_info_black_24dp);
             alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    launchHomeScreen();
+                    String isiSaldo = saldotxt.getText().toString();
+
+                    if (TextUtils.isEmpty(isiSaldo)) {
+                        Toast.makeText(getApplicationContext(), "Enter Saldo!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else {
+                        launchHomeScreen();
+                    }
                 }
             });
             alertDialog.show();

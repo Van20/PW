@@ -46,6 +46,7 @@ import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentHome;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentMonthlyReport;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentPromo;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.SPManager;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils;
 import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 
                             @Override
                             public void onError() {
-                                Photo.setImageResource(R.drawable.ic_user_icon);
+                                Photo.setImageResource(R.drawable.imageerror);
                             }
                         });
             }
@@ -349,7 +350,11 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        Toast.makeText(MainActivity.this, smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils.doBackup(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, Utils.doBackup(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        callFragment(new FragmentHome());
+                        Toast.makeText(MainActivity.this, Utils.doRestore(), Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -394,4 +399,3 @@ public class MainActivity extends AppCompatActivity
                 }).show();
     }
 }
-

@@ -1,5 +1,6 @@
 package smktelkom_mlg.sch.id.mywallet.Database_sql.Utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +52,7 @@ public class Utils {
 
     public static String doRestore() {
         try {
-            File sd = Environment.getExternalStorageDirectory();
+            File sd = new File(Environment.getRootDirectory()+"/My Wallet");
             File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
@@ -86,10 +87,13 @@ public class Utils {
      */
     public static String doBackup() {
         try {
-            File sd = Environment.getExternalStorageDirectory();
+            File sd = new File(Environment.getRootDirectory()+"/My Wallet");
+            if(!sd.exists()){
+                sd.mkdirs();
+            }
             File data = Environment.getDataDirectory();
             if (sd.canWrite()) {
-                String currentDBPath = "/data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
+                String currentDBPath = "data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
                 String backupDBPath = "My Wallet";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
