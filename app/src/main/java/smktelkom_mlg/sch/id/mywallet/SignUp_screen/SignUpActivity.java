@@ -174,9 +174,12 @@ public class SignUpActivity extends AppCompatActivity {
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
                                 if(filePath != null) {
-                                    progressBar.setVisibility(View.GONE);
+                                    int img = 0;
+                                    int a = img+1;
+                                    String email = inputEmail.getText().toString();
 
-                                    StorageReference childRef = storageRef.child("image.jpg");
+                                    progressBar.setVisibility(View.GONE);
+                                    StorageReference childRef = storageRef.child(email+".jpg");
 
                                     //uploading the image
                                     UploadTask uploadTask = childRef.putFile(filePath);

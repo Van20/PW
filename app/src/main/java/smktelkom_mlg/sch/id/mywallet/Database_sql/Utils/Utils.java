@@ -52,7 +52,7 @@ public class Utils {
 
     public static String doRestore() {
         try {
-            File sd = new File(Environment.getRootDirectory()+"/My Wallet");
+            File sd = new File(Environment.getExternalStorageState()+"/My Wallet");
             File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
@@ -87,7 +87,7 @@ public class Utils {
      */
     public static String doBackup() {
         try {
-            File sd = new File(Environment.getRootDirectory()+"/My Wallet");
+            File sd = new File(Environment.getExternalStorageState()+"/My Wallet");
             if(!sd.exists()){
                 sd.mkdirs();
             }

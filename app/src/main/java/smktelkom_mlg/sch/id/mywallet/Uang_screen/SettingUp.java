@@ -67,26 +67,27 @@ public class SettingUp extends Activity {
     public void firsttimeSetting(View view) {
         saldotxt = (EditText) this.findViewById(R.id.setMoney);
         try {
-            saldo.updateSaldo(Integer.parseInt(saldotxt.getText().toString()));
-            Log.d("New Balance", saldo.getSaldo());
-            AlertDialog alertDialog = new AlertDialog.Builder(SettingUp.this).create();
-            alertDialog.setTitle("Succesfully...");
-            alertDialog.setMessage(getResources().getString(R.string.settingupmessagesucces));
-            alertDialog.setIcon(R.drawable.ic_info_black_24dp);
-            alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    String isiSaldo = saldotxt.getText().toString();
+            String isiSaldo = saldotxt.getText().toString();
 
-                    if (TextUtils.isEmpty(isiSaldo)) {
-                        Toast.makeText(getApplicationContext(), "Enter Saldo!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    else {
+            if (TextUtils.isEmpty(isiSaldo)) {
+                Toast.makeText(getApplicationContext(), "Enter Saldo!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else {
+                saldo.updateSaldo(Integer.parseInt(saldotxt.getText().toString()));
+                Log.d("New Balance", saldo.getSaldo());
+                AlertDialog alertDialog = new AlertDialog.Builder(SettingUp.this).create();
+                alertDialog.setTitle("Succesfully...");
+                alertDialog.setMessage(getResources().getString(R.string.settingupmessagesucces));
+                alertDialog.setIcon(R.drawable.ic_info_black_24dp);
+                alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
                         launchHomeScreen();
                     }
-                }
-            });
-            alertDialog.show();
+                });
+                alertDialog.show();
+            }
 
         } catch (SQLException e) {
             Log.d("Error", "SqlExceptionError");
