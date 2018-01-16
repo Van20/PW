@@ -131,8 +131,19 @@ public class MainActivity extends AppCompatActivity
         Photo = (ImageView) hView.findViewById(R.id.photo);
 
         final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+        mUsername = mUser.getDisplayName();
+        personname.setText(mUsername);
 
-        if (user != null) {
+        mEmail = mUser.getEmail();
+        personemail.setText(mEmail);
+
+        if (mUser == null) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+            return;
+
+        } else {
+
             for (UserInfo profile : USER.getProviderData()) {
                 // Id of the provider (ex: google.com)
                 String providerId = profile.getProviderId();
@@ -154,6 +165,7 @@ public class MainActivity extends AppCompatActivity
                                 imageDrawable.setCircular(true);
                                 imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
                                 Photo.setImageDrawable(imageDrawable);
+
                             }
 
                             @Override
@@ -161,35 +173,21 @@ public class MainActivity extends AppCompatActivity
                                 Photo.setImageResource(R.drawable.imageerror);
                             }
                         });
+
+                if (Photo != profile) {
+                    String a = mEmail;
+                    mstorage = FirebaseStorage.getInstance().getReference().child(a + ".jpg");
+                    Glide.with(getApplicationContext())
+                            .using(new FirebaseImageLoader())
+                            .load(mstorage)
+                            .override(125, 125)
+                            .transform(new CircleTransform(MainActivity.this))
+                            .into(Photo);
+
+                }
             }
-
-        }
-
-        if (mUser == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-            return;
-
-        } else {
-            mUsername = mUser.getDisplayName();
-            personname.setText(mUsername);
-
-            mEmail = mUser.getEmail();
-            personemail.setText(mEmail);
-
-            String a = mEmail;
-            mstorage= FirebaseStorage.getInstance().getReference().child(a+".jpg");
-            Glide.with(MainActivity.this)
-                    .using(new FirebaseImageLoader())
-                    .load(mstorage)
-                    .override(160,160)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .transform(new CircleTransform(MainActivity.this))
-                    .into(Photo);
         }
     }
-
-
 
 
 

@@ -1,28 +1,23 @@
 package smktelkom_mlg.sch.id.mywallet.Database_sql.Utils;
 
-import android.content.Context;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+        import android.os.Environment;
+        import android.util.Log;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ListAdapter;
+        import android.widget.ListView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileOutputStream;
+        import java.nio.channels.FileChannel;
+        import java.text.DateFormat;
+        import java.text.DecimalFormat;
+        import java.text.DecimalFormatSymbols;
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
 
 public class Utils {
-
-    /**
-     * Convert Curensy To Indonesia Format
-     */
 
     public static String convertCur(String param) {
         Double money = Double.parseDouble(param);
@@ -36,23 +31,15 @@ public class Utils {
         return kursIndonesia.format(money);
     }
 
-    /**
-     * Return Now Date
-     */
-
     public static String getDateNow() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
-    /**
-     * Restorer Backup Database
-     */
-
     public static String doRestore() {
         try {
-            File sd = new File(Environment.getExternalStorageState()+"/My Wallet");
+            File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
@@ -82,18 +69,12 @@ public class Utils {
         return "Unavailable";
     }
 
-    /**
-     * To Do Backup Database
-     */
     public static String doBackup() {
         try {
-            File sd = new File(Environment.getExternalStorageState()+"/My Wallet");
-            if(!sd.exists()){
-                sd.mkdirs();
-            }
+            File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
             if (sd.canWrite()) {
-                String currentDBPath = "data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
+                String currentDBPath = "/data/data/smktelkom_mlg.sch.id.mywallet/databases/uangku";
                 String backupDBPath = "My Wallet";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
@@ -108,9 +89,10 @@ public class Utils {
                 }
             }
         } catch (Exception e) {
+            return "Backup Failed";
 
         }
-        return null;
+        return "Unvailable";
     }
 
     /**

@@ -1,7 +1,6 @@
 package smktelkom_mlg.sch.id.mywallet.SignUp_screen;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -68,9 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView Profile;
     File file;
-    int PICK_IMAGE_REQUEST = 111;
     Uri filePath;
-    ProgressDialog pd;
     Intent CamIntent, GalIntent, CropIntent ;
     public  static final int RequestPermissionCode  = 1 ;
     DisplayMetrics displayMetrics ;
@@ -173,6 +170,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 // If sign in fails, display a message to the user. If sign in succeeds
                                 // the auth state listener will be notified and logic to handle the
                                 // signed in user can be handled in the listener.
+
+                                //Untuk upload foto
                                 if(filePath != null) {
                                     int img = 0;
                                     int a = img+1;
@@ -187,14 +186,14 @@ public class SignUpActivity extends AppCompatActivity {
                                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            pd.dismiss();
-                                            Toast.makeText(SignUpActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            Toast.makeText(SignUpActivity.this, "Signup is successful", Toast.LENGTH_SHORT).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            pd.dismiss();
-                                            Toast.makeText(SignUpActivity.this, "Upload Failed -> " + e, Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            Toast.makeText(SignUpActivity.this, "Signup Failed -> ", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -202,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, "Select an image", Toast.LENGTH_SHORT).show();
                                 }
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(SignUpActivity.this, "The user is registered and Authentication failed or please check internet connection!.",
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(SignUpActivity.this, "Register account was successfully processed!" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
@@ -254,6 +253,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    //untuk panggil crop foto
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0 && resultCode == RESULT_OK) {

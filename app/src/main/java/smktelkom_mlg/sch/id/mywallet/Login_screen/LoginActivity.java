@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
+                //apakah user ada pada firebase authentication?
                 if(firebaseAuth.getCurrentUser()!=null)
                 {
                     Intent n=new Intent(LoginActivity.this,SettingUp.class);
@@ -226,6 +227,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //autentikasi user login google
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
