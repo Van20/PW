@@ -80,7 +80,7 @@ public class FragmentMonthlyReport extends Fragment {
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_monthly_report, container, false);
         getActivity().setTitle("Monthly Report");
-        ((MainActivity) getActivity()).hideFloatingActionButton();
+
         expense = new ExpenseController(getActivity());
         report = new ReportController(getActivity());
 

@@ -35,7 +35,7 @@ public class SettingUp extends Activity {
         prefManager = new SPManager(this);
 
         if(prefManager.isFirstTimeLaunch()){
-            saldo.addSaldo(new Saldo(1, 10000));
+            saldo.addSaldo(new Saldo(1, 0));
         }
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();

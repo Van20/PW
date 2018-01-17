@@ -55,7 +55,6 @@ public class FragmentCategory extends Fragment {
 
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_category, container, false);
         getActivity().setTitle("Category");
-        ((MainActivity) getActivity()).hideFloatingActionButton();
 
         category = new CategoryController(getActivity());
         expense = new ExpenseController(getActivity());

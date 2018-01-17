@@ -22,4 +22,9 @@
     <color name="dot_inactive">#3315B4F1</color>
     <color name="colorPrimaryTrans">#C615B4F1</color>
     <color name="back_step">#F0FFFF</color>
+
+    <color name="red_notice">#FF0000</color>
+    <color name="grey">#DDDDDD</color>
+    <color name="light_grey">#EEEEEE</color>
+    <color name="white_transparent">#01ffffff</color>
 </resources>

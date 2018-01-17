@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/tools"
     android:background="#fff">
 
     <LinearLayout
@@ -137,5 +138,24 @@
             android:textStyle="bold"
             android:textColor="#fff" />
     </LinearLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        app:menu_backgroundColor="#22ffffff"
+
+        app:menu_colorNormal="@color/colorAccent"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_fab_label="Manage Your Money">
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 </RelativeLayout>

@@ -46,8 +46,10 @@
 
     <string-array name="dialog_expense">
         <item>Change Expenditure</item>
-        <item>Delete Expenditure</item>
     </string-array>
+
+    <string name="pemasukan">Add Income</string>
+    <string name="pengeluaran">Add Expenditure</string>
 
     <string-array name="Bulan">
         <item>January</item>

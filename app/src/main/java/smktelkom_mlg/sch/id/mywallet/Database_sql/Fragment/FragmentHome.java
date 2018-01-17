@@ -1,14 +1,15 @@
 package smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment;
 
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,11 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
+import com.github.clans.fab.FloatingActionMenu;
 
 import smktelkom_mlg.sch.id.mywallet.Beranda_screen.MainActivity;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.CategoryController;
@@ -39,10 +36,15 @@ import smktelkom_mlg.sch.id.mywallet.Database_sql.Model.Expense;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Model.Saldo;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.DatePicker;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Utils.Utils;
-import smktelkom_mlg.sch.id.mywallet.Login_screen.LoginActivity;
 import smktelkom_mlg.sch.id.mywallet.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class FragmentHome extends Fragment {
 
@@ -69,11 +71,15 @@ public class FragmentHome extends Fragment {
     TextView currentSaldo, todayTotal;
     Spinner spinCategory;
     ListView expenseList;
-    Button btnTgl, btnNext, btnPrev;
+    Button btnTgl,btnNext,btnPrev;
 
     private CategoryController category;
     private SaldoController saldo;
     private ExpenseController expense;
+
+    private FloatingActionMenu Fab;
+    private List<FloatingActionMenu> menus = new ArrayList<>();
+    private Handler mUiHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,7 +87,6 @@ public class FragmentHome extends Fragment {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_home, container, false);
         getActivity().setTitle("Manage Money");
 
-        ((MainActivity) getActivity()).showFloatingActionButton();
 
         category = new CategoryController(getActivity());
         expense = new ExpenseController(getActivity());
@@ -126,26 +131,101 @@ public class FragmentHome extends Fragment {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showFormDialog("Add");
-            }
-        });
         return view;
     }
 
-    private void changeDay(String s) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Fab = (FloatingActionMenu) view.findViewById(R.id.fab);
+
+        final com.github.clans.fab.FloatingActionButton programFab1 = new com.github.clans.fab.FloatingActionButton(getActivity());
+        programFab1.setButtonSize(com.github.clans.fab.FloatingActionButton.SIZE_MINI);
+        programFab1.setLabelText(getString(R.string.pemasukan));
+        programFab1.setImageResource(R.drawable.ic_fab);
+        Fab.addMenuButton(programFab1);
+
+        final com.github.clans.fab.FloatingActionButton programFab2 = new com.github.clans.fab.FloatingActionButton(getActivity());
+        programFab2.setButtonSize(com.github.clans.fab.FloatingActionButton.SIZE_MINI);
+        programFab2.setLabelText(getString(R.string.pengeluaran));
+        programFab2.setImageResource(R.drawable.ic_fab);
+        Fab.addMenuButton(programFab2);
+
+        programFab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                programFab1.setLabelColors(ContextCompat.getColor(getActivity(), R.color.grey),
+                        ContextCompat.getColor(getActivity(), R.color.light_grey),
+                        ContextCompat.getColor(getActivity(), R.color.white_transparent));
+
+                showFormDialog2("Pemasukan");
+                programFab1.setLabelTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+
+                programFab2.setLabelColors(ContextCompat.getColor(getActivity(), R.color.black),
+                        ContextCompat.getColor(getActivity(), R.color.light_grey),
+                        ContextCompat.getColor(getActivity(), R.color.white_transparent));
+                programFab2.setLabelTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            }
+        });
+
+
+        programFab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                programFab2.setLabelColors(ContextCompat.getColor(getActivity(), R.color.grey),
+                        ContextCompat.getColor(getActivity(), R.color.light_grey),
+                        ContextCompat.getColor(getActivity(), R.color.white_transparent));
+                showFormDialog("Pengeluaran");
+                programFab2.setLabelTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+
+                programFab1.setLabelColors(ContextCompat.getColor(getActivity(), R.color.black),
+                        ContextCompat.getColor(getActivity(), R.color.light_grey),
+                        ContextCompat.getColor(getActivity(), R.color.white_transparent));
+                programFab1.setLabelTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+            }
+        });
+
+        Fab.setClosedOnTouchOutside(true);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        menus.add(Fab);
+
+        int delay = 400;
+        for (final FloatingActionMenu menu : menus) {
+            mUiHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    menu.showMenuButton(true);
+                }
+            }, delay);
+            delay += 150;
+        }
+
+        Fab.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fab.toggle(true);
+            }
+        });
+
+    }
+
+    private void changeDay(String s){
         String date = btnTgl.getText().toString();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(df.parse(date));
-            if (s.equalsIgnoreCase("+")) {
-                c.add(Calendar.DATE, 1);
-            } else {
-                c.add(Calendar.DATE, -1);
+            if (s.equalsIgnoreCase("+")){
+                c.add(Calendar.DATE,1);
+            }else{
+                c.add(Calendar.DATE,-1);
             }
             date = df.format(c.getTime());
             btnTgl.setText(date);
@@ -154,6 +234,7 @@ public class FragmentHome extends Fragment {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Inflate Item To List
@@ -188,6 +269,7 @@ public class FragmentHome extends Fragment {
             }
         }
     }
+
     /**
      * Method To Change Available Money
      */
@@ -254,7 +336,7 @@ public class FragmentHome extends Fragment {
      */
     public void menuItemDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Edit / Delete Expenditure");
+        builder.setTitle("Edit / Hapus Pengeluaran");
         builder.setItems(R.array.dialog_expense, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
@@ -277,7 +359,7 @@ public class FragmentHome extends Fragment {
      */
     public void showFormDialog(String to) {
         final String todo = to;
-        LayoutInflater mainLayout = LayoutInflater.from(getActivity());
+        final LayoutInflater mainLayout = LayoutInflater.from(getActivity());
         mView = mainLayout.inflate(R.layout.dialog_expense, null);
         inputAmount = (EditText) mView.findViewById(R.id.inputJumlah);
         inputDesk = (EditText) mView.findViewById(R.id.inputDesk);
@@ -295,38 +377,48 @@ public class FragmentHome extends Fragment {
         alertDialogBuilderUserInput
                 .setCancelable(false)
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialogBox, int id) {
                         Expense peng = new Expense();
-
                         peng.setId(SELECTED_ID);
                         peng.setIdkat(SELECTED_KATID);
 
-                        String Description = inputDesk.getText().toString();
-                        if (TextUtils.isEmpty(Description)) {
+                        String description = inputDesk.getText().toString();
+                        String expenditure = inputAmount.getText().toString();
+                        if (TextUtils.isEmpty(description)) {
                             Toast.makeText(getActivity(), "Enter description of Expenditure!", Toast.LENGTH_SHORT).show();
                             return;
-                        } else {
-                            peng.setDeskripsi(inputDesk.getText().toString());
                         }
 
-                        String Amount = inputAmount.getText().toString();
-                        if (TextUtils.isEmpty(Amount)) {
+                        if (TextUtils.isEmpty(expenditure)) {
                             Toast.makeText(getActivity(), "Enter amount of Expenditure!", Toast.LENGTH_SHORT).show();
                             return;
-                        } else {
-                            peng.setJumlah(Integer.parseInt(inputAmount.getText().toString()));
                         }
 
+                        peng.setDeskripsi(inputDesk.getText().toString());
+                        peng.setJumlah(Integer.parseInt(inputAmount.getText().toString()));
                         peng.setTanggal(btnTgl.getText().toString());
+                        if (todo.equals("Pengeluaran")) {
+                            int a = 0;
+                            int b = 10000;
 
-                        if (todo.equals("Add")) {
-                            expense.addExpense(peng);
-                            saldo.updateSaldo(mySaldo.getSaldo() - peng.getJumlah());
-                        } else {
+
+                            if ((mySaldo.getSaldo() - peng.getJumlah()) < a) {
+                                Toast.makeText(getActivity(), "Money is not enough", Toast.LENGTH_LONG).show();
+                                return;
+                            } else {
+                                expense.addExpense(peng);
+                                saldo.updateSaldo(mySaldo.getSaldo() - peng.getJumlah());
+                                if ((mySaldo.getSaldo() - peng.getJumlah()) < b) {
+                                    Toast.makeText(getActivity(), "Money stayed a little", Toast.LENGTH_LONG).show();
+                                    currentSaldo.setTextColor(getResources().getColor(R.color.red_notice));
+                                }
+                            }
+                        }
+                         else {
                             expense.updateExpense(peng);
                             saldo.updateSaldo(chageBalance(peng.getJumlah()));
                         }
+
                         new MyAsynch().execute(btnTgl.getText().toString());
                     }
                 })
@@ -340,6 +432,57 @@ public class FragmentHome extends Fragment {
         alertDialogAndroid.show();
     }
 
+    public void showFormDialog2(String to) {
+        final String todo = to;
+        final LayoutInflater mainLayout = LayoutInflater.from(getActivity());
+        mView = mainLayout.inflate(R.layout.dialog_income, null);
+        inputAmount = (EditText) mView.findViewById(R.id.inputJumlah);
+
+        if (todo.equals("Update")) {
+            inputAmount.setText(String.valueOf(selectedExpense.getJumlah()));
+        }
+
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(getActivity());
+        alertDialogBuilderUserInput.setView(mView);
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogBox, int id) {
+                        Expense inc = new Expense();
+                        inc.setId(SELECTED_ID);
+
+                        String expenditure = inputAmount.getText().toString();
+                        if (TextUtils.isEmpty(expenditure)) {
+                            Toast.makeText(getActivity(), "Enter amount of Expenditure!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        inc.setJumlah(Integer.parseInt(inputAmount.getText().toString()));
+                        if (todo.equals("Pemasukan")) {
+                            int a = 10000;
+                                expense.addExpense(inc);
+                                saldo.updateSaldo(mySaldo.getSaldo() + inc.getJumlah());
+                            Toast.makeText(getActivity(), "Add Balance Successfully", Toast.LENGTH_LONG).show();
+                            if ((mySaldo.getSaldo() + inc.getJumlah()) > a){
+                                currentSaldo.setTextColor(getResources().getColor(R.color.white));
+                            }
+                        } else {
+                            expense.updateExpense(inc);
+                            saldo.updateSaldo(chageBalance(inc.getJumlah()));
+                        }
+
+                        new MyAsynch().execute(btnTgl.getText().toString());
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+    }
     /**
      * Show Dialog To Open Date Picker
      */

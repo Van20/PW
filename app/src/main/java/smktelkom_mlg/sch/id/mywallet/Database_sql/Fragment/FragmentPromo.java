@@ -44,7 +44,7 @@ public class FragmentPromo extends Fragment {
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_promo, container, false);
         getActivity().setTitle("View Online Shop");
-        ((MainActivity) getActivity()).hideFloatingActionButton();
+
 
         Lazada = (CardView)view.findViewById(R.id.lazada);
         Lazada.setOnClickListener(new View.OnClickListener() {

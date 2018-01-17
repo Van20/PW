@@ -48,6 +48,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.CategoryController;
+import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.ExpenseController;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Controller.SaldoController;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentCategory;
 import smktelkom_mlg.sch.id.mywallet.Database_sql.Fragment.FragmentDailyReport;
@@ -78,7 +80,6 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction fragmentTransaction;
     Fragment fragment = null;
     SPManager prefManager;
-    FloatingActionButton fabBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +94,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         prefManager = new SPManager(this);
-        fabBtn = (FloatingActionButton) findViewById(R.id.fab);
-        fabBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -174,7 +167,7 @@ public class MainActivity extends AppCompatActivity
                             }
                         });
 
-                if (Photo != profile) {
+                if (Photo == null) {
                     String a = mEmail;
                     mstorage = FirebaseStorage.getInstance().getReference().child(a + ".jpg");
                     Glide.with(getApplicationContext())
@@ -187,15 +180,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }
-    }
-
-
-
-    public void showFloatingActionButton() {
-        fabBtn.show();
-    }
-    public void hideFloatingActionButton() {
-        fabBtn.hide();
     }
 
     @Override
@@ -252,20 +236,6 @@ public class MainActivity extends AppCompatActivity
                         }
                     }).show();
         }
-
-        /**
-         * Share button
-         */
-        if (id == R.id.share_action) {
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            String shareBodyText = getResources().getString(R.string.sharebody);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.sharesubject) );
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
-            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.sharedialog)));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

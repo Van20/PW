@@ -60,7 +60,6 @@ public class FragmentDailyReport extends Fragment {
                              Bundle savedInstanceState) {
         view = (RelativeLayout) inflater.inflate(R.layout.fragment_daily_report, container, false);
         getActivity().setTitle("Daily Report");
-        ((MainActivity) getActivity()).hideFloatingActionButton();
         category = new CategoryController(getActivity());
         expense = new ExpenseController(getActivity());
         report = new ReportController(getActivity());
@@ -73,6 +72,7 @@ public class FragmentDailyReport extends Fragment {
                 showDatePicker();
             }
         });
+
 
         totalOut = (TextView) view.findViewById(R.id.todayOut);
         dailyReportList = (ListView) view.findViewById(R.id.outList);
