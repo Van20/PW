@@ -208,11 +208,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            showSaldoDialog();
-            return true;
-        }
 
         /**
          * Reset button
@@ -237,46 +232,6 @@ public class MainActivity extends AppCompatActivity
                     }).show();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Dialog setting Saldo
-     */
-    private void showSaldoDialog() {
-        final SaldoController saldoKontrol = new SaldoController(this);
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
-        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_saldo, null);
-        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(this);
-        alertDialogBuilderUserInput.setView(mView);
-
-        final EditText newsaldo = (EditText) mView.findViewById(R.id.userInputDialog);
-        newsaldo.setText(saldoKontrol.getSaldo());
-        alertDialogBuilderUserInput
-                .setCancelable(false)
-                .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogBox, int id) {
-                        String saldo = newsaldo.getText().toString();
-
-                        if (TextUtils.isEmpty(saldo)) {
-                            Toast.makeText(getApplicationContext(), "Enter amount of Balance!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        saldoKontrol.updateSaldo(Integer.parseInt(newsaldo.getText().toString()));
-                        callFragment(new FragmentHome());
-                    }
-                })
-
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                dialogBox.cancel();
-                            }
-                        });
-
-        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-        alertDialogAndroid.show();
-
     }
 
     /**
